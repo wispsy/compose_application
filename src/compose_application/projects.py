@@ -10,6 +10,8 @@ import re
 import sys
 from tempfile import TemporaryDirectory
 
+from .terminal_templates import TerminalProjectSpec, render_terminal_project
+
 
 REFERENCE_REVISION = "8977963049023c7fe72bb8a2c9089633df049c3d"
 PROFILES = ("service", "ui", "live")
@@ -54,6 +56,8 @@ class ProjectSpec:
 
 def render_project(spec: ProjectSpec):
     """Return detached UTF-8 source files without writing or installing anything."""
+    if type(spec) is TerminalProjectSpec:
+        return render_terminal_project(spec)
     if type(spec) is not ProjectSpec:
         raise TypeError("render_project() requires ProjectSpec.")
     from .project_templates import (CHECK_RUNNER, COMMAND, HTTP_CHECKS, SERVICE_APP, SERVICE_PHASE,
@@ -233,10 +237,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("destination", type=Path)
     parser.add_argument("--name", required=True)
-    parser.add_argument("--profile", choices=PROFILES, required=True)
+    parser.add_argument("--profile", choices=(*PROFILES, "terminal"), required=True)
     arguments = parser.parse_args()
     try:
-        spec = ProjectSpec(arguments.name, arguments.profile)
+        spec = (TerminalProjectSpec(arguments.name) if arguments.profile == "terminal"
+                else ProjectSpec(arguments.name, arguments.profile))
         created = create_project(spec, arguments.destination)
     except (OSError, ValueError) as error:
         parser.exit(2, f"Project creation refused: {error}\n")
