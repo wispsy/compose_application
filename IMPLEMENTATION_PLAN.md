@@ -348,3 +348,17 @@ the first point at which integration is tested.
 Publication, hosted deployment, a PostgreSQL driver/service and public activation
 remain separate operations. This plan creates no release, changes no current
 runtime dependency versions and selects no new external service.
+
+## Cohesion Block B: terminal application composition
+
+[CA-CLI-01](https://github.com/wispsy/compose_application/issues/52) adds an explicit
+terminal generation profile using Expose Interface plus Carets, with independent
+immutable source selections, application-owned source and installed headless
+acceptance. Existing web selections remain intact.
+[CA-CLI-02](https://github.com/wispsy/compose_application/issues/53) later composes
+shared services across Python, CLI, terminal and optional API interfaces. Carets
+owns its design system and lifecycle; Compose Application owns assembly and
+cross-package qualification. The
+[complete Block B plan](https://github.com/wispsy/wispsy/blob/main/docs/cohesion-block-b/IMPLEMENTATION_PLAN.md)
+and [Project](https://github.com/orgs/wispsy/projects/28) record family contracts,
+prerequisites and later Warewolf hub selection.

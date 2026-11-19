@@ -107,3 +107,22 @@ provides dataset sorting, literal search, column controls and pagination over
 protected registered records without changing stored values or revisions.
 Explicit editable mode adds checked scalar saves, preserved conflict drafts
 and process-restart acceptance; a separate headless example uses the same rows.
+
+## Terminal applications
+
+Generate an application-owned Expose Interface + Carets project with:
+
+```sh
+uv run python -m compose_application.projects ./progress-desk --name progress-desk --profile terminal
+cd progress-desk
+uv sync
+uv run progress-desk check
+uv run progress-desk terminal
+```
+
+`TerminalProjectSpec` selects independent immutable library sources and reuses
+the existing exclusive creation/repeat-preservation behavior. Generated source
+owns the finite application service, Carets model and typed commands; it does
+not require a Compose Application runtime. `check` is headless; interactive
+terminal input currently requires POSIX. Existing service/ui/live source
+selections remain compatible. See [terminal projects](docs/terminal-projects.md).
