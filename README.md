@@ -55,7 +55,7 @@ The distribution check builds and installs both wheel and source distributions
 into independent temporary environments outside the checkout. CI runs it on
 Linux, macOS and Windows using Python 3.14.
 
-No release has been published for this project. Package publication and hosted
+The initial preview is published as `compose-application==0.1.0a1`. Package installation and hosted
 deployment require their own selected scope and authorization. License terms
 will be selected before publication.
 ## Service composition
@@ -104,7 +104,7 @@ uv run garden-board serve --database ./work-items.sqlite3
 
 Select `service` for checked REST, `ui` for the loopback typed workspace, or
 `live` for a protected native ASGI factory with caller-supplied credentials,
-origin and host. Each project pins the accepted immutable composition source.
+origin and host. Each project selects the exact qualified composition preview from PyPI.
 Generation installs nothing. Matching repeat requests leave owner edits and
 data untouched. See the [layout, setup and acceptance](docs/reference-projects.md).
 
@@ -126,7 +126,7 @@ uv run progress-desk check
 uv run progress-desk terminal
 ```
 
-`TerminalProjectSpec` selects independent immutable library sources and reuses
+`TerminalProjectSpec` selects independent published library versions and reuses
 the existing exclusive creation/repeat-preservation behavior. Generated source
 owns the finite application service, Carets model and typed commands; it does
 not require a Compose Application runtime. `check` is headless; interactive
