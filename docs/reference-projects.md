@@ -20,9 +20,8 @@ source and all data belong to the project owner after creation.
 Names are lowercase portable distribution names with single hyphens; Python
 imports replace hyphens with underscores. Names that shadow standard-library,
 integration or reserved platform names are refused. Every project selects one
-profile and the immutable accepted composition source
-`8977963049023c7fe72bb8a2c9089633df049c3d`. That source owns the qualified API,
-UI and storage pins. The generator adds no runtime dependency to the base
+profile and `compose-application[PROFILE]==0.1.0a1` from PyPI. That release
+selects the qualified API, UI and storage versions. The generator adds no runtime dependency to the base
 composition package and imports no optional integration to select a profile.
 
 Generation is a local operation. It will neither install dependencies nor

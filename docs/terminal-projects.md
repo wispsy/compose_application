@@ -27,7 +27,7 @@ background producers before restoration. Output goes to stderr; the command
 prints a single JSON outcome on stdout. Replace the service with explicit
 application behavior and preserve outcome/cancellation/authorization boundaries.
 
-Source pins are a qualified development profile, not a published-release
+Historical source pins record a qualified development profile; current generation selects a published-release
 promise. `scripts/check_terminal_project.py` installs a generated project outside
 the checkout and executes both its module and console commands. CI runs this
 on Linux/macOS/Windows; native interactive support remains POSIX-only. Optional
