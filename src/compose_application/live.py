@@ -68,7 +68,7 @@ class LiveConfig:
 def _dependencies():
     try:
         for package in ("spatial-ui", "expose-api", "backpack-store", "enforce-type"):
-            if metadata.version(package) != "0.1.0":
+            if metadata.version(package) != ("0.1.1" if package == "spatial-ui" else "0.2.0"):
                 raise ProfileError("Installed packages do not match the selected live profile.")
         import expose_api as api
         from expose_api.backpack import BackpackStore
@@ -77,7 +77,7 @@ def _dependencies():
         if "predicate" not in inspect.signature(BackpackStore.update_checked).parameters:
             raise ImportError
     except (ImportError, metadata.PackageNotFoundError):
-        raise ProfileError("Install compose-application[live] with its qualified source revisions.") from None
+        raise ProfileError("Install compose-application[live] with its qualified published versions.") from None
     return api, BackpackStore, ASGIApp, BrowserLiveConfig
 
 

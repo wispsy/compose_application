@@ -18,7 +18,7 @@ class TerminalProjectTests(unittest.TestCase):
         files = render_project(spec)
         metadata = tomllib.loads(files['pyproject.toml'])['project']
         self.assertEqual(metadata['dependencies'], list(spec.dependencies))
-        self.assertTrue(all('@' in dep and len(dep.rsplit('@', 1)[1]) == 40 for dep in spec.dependencies))
+        self.assertEqual(spec.dependencies, ('carets==0.2.0', 'expose-interface==0.1.0'))
         self.assertNotIn('compose-application', ''.join(metadata['dependencies']))
         self.assertEqual(json.loads(files['reference-project.json']), spec.selection())
         for name, content in files.items():

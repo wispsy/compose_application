@@ -26,18 +26,12 @@ conflicts = [[
 
 [[package]]
 name = "backpack-store"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/backpack.git?rev=54f5a1e883fcc32f8d87cc553dc83dae0434300d#54f5a1e883fcc32f8d87cc553dc83dae0434300d" }
-
-[package.optional-dependencies]
-enforce-type = [
-    { name = "enforce-type" },
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/cb/0978c9614cb61b54753d276ff0320495fdedc29c1f103d8482bdbd91b56e/backpack_store-0.2.0.tar.gz", hash = "sha256:7c74b817b16a822e659f734214dd12aef5b11188481c4fcd6f25652e5674394e", size = 35271, upload-time = "2026-11-17T16:18:51.883Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/90/34/15a1c307c9ac9047815e9919fc1375185b9b7834e2f76f14761bbf8b853e/backpack_store-0.2.0-py3-none-any.whl", hash = "sha256:1e7f0a58e15e82c5ba1586a1b16908e7efd80a2222babe67861db8b261c5c47e", size = 43780, upload-time = "2026-11-17T16:18:49.671Z" },
 ]
-
-[[package]]
-name = "backpack-store"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/backpack.git?rev=9a691aa551bf7fb42134168452bbdb2e1d454928#9a691aa551bf7fb42134168452bbdb2e1d454928" }
 
 [package.optional-dependencies]
 enforce-type = [
@@ -46,28 +40,28 @@ enforce-type = [
 
 [[package]]
 name = "compose-application"
-version = "0.1.0.dev0"
+version = "0.1.0a1"
 source = { editable = "." }
 
 [package.optional-dependencies]
 live = [
-    { name = "expose-api", version = "0.1.0", source = { git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1#5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" }, extra = ["backpack"], marker = "extra == 'extra-19-compose-application-live' or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-ui') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-ui' and extra == 'extra-19-compose-application-validation')" },
-    { name = "spatial-ui", version = "0.1.0", source = { git = "https://github.com/wispsy/spatial_ui.git?rev=9e473497febdc505e54ba25536b65b68722d264b#9e473497febdc505e54ba25536b65b68722d264b" } },
+    { name = "expose-api", extra = ["backpack"], marker = "extra == 'extra-19-compose-application-live' or extra == 'extra-19-compose-application-service' and (extra == 'extra-19-compose-application-tabular' or extra == 'extra-19-compose-application-validation') or extra == 'extra-19-compose-application-tabular' and (extra == 'extra-19-compose-application-ui' or extra == 'extra-19-compose-application-validation') or extra == 'extra-19-compose-application-ui' and extra == 'extra-19-compose-application-validation'" },
+    { name = "spatial-ui" },
 ]
 service = [
-    { name = "expose-api", version = "0.1.0", source = { git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1#5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" }, extra = ["backpack"], marker = "extra == 'extra-19-compose-application-service' or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-ui') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-ui' and extra == 'extra-19-compose-application-validation')" },
+    { name = "expose-api", extra = ["backpack"], marker = "extra == 'extra-19-compose-application-service' or extra == 'extra-19-compose-application-live' and (extra == 'extra-19-compose-application-tabular' or extra == 'extra-19-compose-application-validation') or extra == 'extra-19-compose-application-tabular' and (extra == 'extra-19-compose-application-ui' or extra == 'extra-19-compose-application-validation') or extra == 'extra-19-compose-application-ui' and extra == 'extra-19-compose-application-validation'" },
 ]
 tabular = [
-    { name = "expose-api", version = "0.1.0", source = { git = "https://github.com/wispsy/expose_api.git?rev=cdff4682db5decc3d6bdb55f7ba5a6a2105f154a#cdff4682db5decc3d6bdb55f7ba5a6a2105f154a" }, extra = ["backpack"], marker = "extra == 'extra-19-compose-application-tabular' or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-ui' and extra == 'extra-19-compose-application-validation') or (extra != 'extra-19-compose-application-live' and extra != 'extra-19-compose-application-service' and extra != 'extra-19-compose-application-ui' and extra != 'extra-19-compose-application-validation')" },
+    { name = "expose-api", extra = ["backpack"], marker = "extra == 'extra-19-compose-application-tabular' or (extra == 'extra-19-compose-application-live' or extra == 'extra-19-compose-application-service' or extra == 'extra-19-compose-application-ui') and extra == 'extra-19-compose-application-validation' or extra != 'extra-19-compose-application-live' and extra != 'extra-19-compose-application-service' and extra != 'extra-19-compose-application-ui' and extra != 'extra-19-compose-application-validation'" },
     { name = "headless-spreadsheets" },
-    { name = "spatial-ui", version = "0.1.0", source = { git = "https://github.com/wispsy/spatial_ui.git?rev=1c782cf8c899d605caad840c2f0d15d997d9ecc8#1c782cf8c899d605caad840c2f0d15d997d9ecc8" } },
+    { name = "spatial-ui" },
 ]
 ui = [
-    { name = "expose-api", version = "0.1.0", source = { git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1#5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" }, extra = ["backpack"], marker = "extra == 'extra-19-compose-application-ui' or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-validation')" },
-    { name = "spatial-ui", version = "0.1.0", source = { git = "https://github.com/wispsy/spatial_ui.git?rev=9e473497febdc505e54ba25536b65b68722d264b#9e473497febdc505e54ba25536b65b68722d264b" } },
+    { name = "expose-api", extra = ["backpack"], marker = "extra == 'extra-19-compose-application-ui' or (extra == 'extra-19-compose-application-live' or extra == 'extra-19-compose-application-service') and (extra == 'extra-19-compose-application-tabular' or extra == 'extra-19-compose-application-validation') or extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-validation'" },
+    { name = "spatial-ui" },
 ]
 validation = [
-    { name = "expose-api", version = "0.1.0", source = { git = "https://github.com/wispsy/expose_api.git?rev=c20ce4aa3487d4913b56ff244a031f83de2df285#c20ce4aa3487d4913b56ff244a031f83de2df285" }, extra = ["backpack", "enforce-type"], marker = "extra == 'extra-19-compose-application-validation' or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-ui')" },
+    { name = "expose-api", extra = ["backpack", "enforce-type"], marker = "extra == 'extra-19-compose-application-validation' or (extra == 'extra-19-compose-application-live' or extra == 'extra-19-compose-application-service') and extra == 'extra-19-compose-application-tabular' or extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-ui'" },
 ]
 
 [package.dev-dependencies]
@@ -77,15 +71,15 @@ browser-tests = [
 
 [package.metadata]
 requires-dist = [
-    { name = "expose-api", extras = ["backpack"], marker = "extra == 'live'", git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" },
-    { name = "expose-api", extras = ["backpack"], marker = "extra == 'service'", git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" },
-    { name = "expose-api", extras = ["backpack"], marker = "extra == 'tabular'", git = "https://github.com/wispsy/expose_api.git?rev=cdff4682db5decc3d6bdb55f7ba5a6a2105f154a" },
-    { name = "expose-api", extras = ["backpack"], marker = "extra == 'ui'", git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" },
-    { name = "expose-api", extras = ["backpack", "enforce-type"], marker = "extra == 'validation'", git = "https://github.com/wispsy/expose_api.git?rev=c20ce4aa3487d4913b56ff244a031f83de2df285" },
-    { name = "headless-spreadsheets", marker = "extra == 'tabular'", git = "https://github.com/wispsy/headless_spreadsheets.git?rev=6eaff1b3764910720956c66559dce3f34a430ee2" },
-    { name = "spatial-ui", marker = "extra == 'live'", git = "https://github.com/wispsy/spatial_ui.git?rev=9e473497febdc505e54ba25536b65b68722d264b" },
-    { name = "spatial-ui", marker = "extra == 'tabular'", git = "https://github.com/wispsy/spatial_ui.git?rev=1c782cf8c899d605caad840c2f0d15d997d9ecc8" },
-    { name = "spatial-ui", marker = "extra == 'ui'", git = "https://github.com/wispsy/spatial_ui.git?rev=9e473497febdc505e54ba25536b65b68722d264b" },
+    { name = "expose-api", extras = ["backpack"], marker = "extra == 'live'", specifier = "==0.2.0" },
+    { name = "expose-api", extras = ["backpack"], marker = "extra == 'service'", specifier = "==0.2.0" },
+    { name = "expose-api", extras = ["backpack"], marker = "extra == 'tabular'", specifier = "==0.2.0" },
+    { name = "expose-api", extras = ["backpack"], marker = "extra == 'ui'", specifier = "==0.2.0" },
+    { name = "expose-api", extras = ["backpack", "enforce-type"], marker = "extra == 'validation'", specifier = "==0.2.0" },
+    { name = "headless-spreadsheets", marker = "extra == 'tabular'", specifier = "==0.1.1" },
+    { name = "spatial-ui", marker = "extra == 'live'", specifier = "==0.1.1" },
+    { name = "spatial-ui", marker = "extra == 'tabular'", specifier = "==0.1.1" },
+    { name = "spatial-ui", marker = "extra == 'ui'", specifier = "==0.1.1" },
 ]
 provides-extras = ["validation", "service", "ui", "live", "tabular"]
 
@@ -94,44 +88,28 @@ browser-tests = [{ name = "playwright", specifier = "==1.64.0" }]
 
 [[package]]
 name = "enforce-type"
-version = "0.1.0"
+version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c2/3b/16c74a0955ccfabe3f9d1df47bba3ba0a3375b7bcca095c207069df4d8b2/enforce_type-0.1.0.tar.gz", hash = "sha256:5ac74c4221008eb02448518440b466152611fed099b85c1c7e632da0f86b3fd8", size = 9502, upload-time = "2026-10-19T19:24:37.209Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/e7/8c7b802f724cd2d70fb66ba46db766273f8780321f938df3ddf162a8feca/enforce_type-0.2.0.tar.gz", hash = "sha256:92514ea428418e7a5820a4e06a2f1edb43ea34c5c7bdd08598dbdb36cdd4aa78", size = 13611, upload-time = "2026-11-17T16:04:32.927Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/98/c5/45d52a53416d8cf3580b552a619e6bc0ae0b3b2000ccf1269aa0157c711b/enforce_type-0.1.0-py3-none-any.whl", hash = "sha256:ece2a7a86a9ac6ee337af58ce5eab85acbc10900ccb5e4e4dd53392b1773e075", size = 11908, upload-time = "2026-10-19T19:24:36.138Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/28/d921c0b64bc33ccd8da2725ae412edcaef3baaaeaf704854daf6be0b6865/enforce_type-0.2.0-py3-none-any.whl", hash = "sha256:9009c8576714e9b1b8a413b9c8d6483531dadd487dc84593bc064d76cdfa8d8c", size = 16950, upload-time = "2026-11-17T16:04:31.74Z" },
 ]
 
 [[package]]
 name = "expose-api"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/expose_api.git?rev=5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1#5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1" }
-
-[package.optional-dependencies]
-backpack = [
-    { name = "backpack-store", version = "0.1.0", source = { git = "https://github.com/wispsy/backpack.git?rev=54f5a1e883fcc32f8d87cc553dc83dae0434300d#54f5a1e883fcc32f8d87cc553dc83dae0434300d" }, extra = ["enforce-type"], marker = "extra == 'extra-19-compose-application-live' or extra == 'extra-19-compose-application-service' or extra == 'extra-19-compose-application-ui' or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-validation')" },
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7e/74/880ab0c3e2f8f2c4a5c3deef55f2bba30e71b7a1a3d291d8a4b3c18ce615/expose_api-0.2.0.tar.gz", hash = "sha256:ca8b894b91caa176e77426580da37e2a5dd2060c19d41b28e34fcadd287c255a", size = 69433, upload-time = "2026-11-17T16:25:21.412Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1a/ba/bddbe46ddb2fc39b6d6c77656ccb03ccd5908b9705aa27a62fe6cf7d2deb/expose_api-0.2.0-py3-none-any.whl", hash = "sha256:03d1970143a64e40ef9230dcb6cfc2b5c988af789a04b392d6d458f1f515e91c", size = 84976, upload-time = "2026-11-17T16:25:20.32Z" },
 ]
 
-[[package]]
-name = "expose-api"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/expose_api.git?rev=c20ce4aa3487d4913b56ff244a031f83de2df285#c20ce4aa3487d4913b56ff244a031f83de2df285" }
-
 [package.optional-dependencies]
 backpack = [
-    { name = "backpack-store", version = "0.1.0", source = { git = "https://github.com/wispsy/backpack.git?rev=54f5a1e883fcc32f8d87cc553dc83dae0434300d#54f5a1e883fcc32f8d87cc553dc83dae0434300d" }, extra = ["enforce-type"], marker = "extra == 'extra-19-compose-application-validation' or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-tabular') or (extra == 'extra-19-compose-application-tabular' and extra == 'extra-19-compose-application-ui')" },
+    { name = "backpack-store", extra = ["enforce-type"] },
 ]
 enforce-type = [
     { name = "enforce-type" },
-]
-
-[[package]]
-name = "expose-api"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/expose_api.git?rev=cdff4682db5decc3d6bdb55f7ba5a6a2105f154a#cdff4682db5decc3d6bdb55f7ba5a6a2105f154a" }
-
-[package.optional-dependencies]
-backpack = [
-    { name = "backpack-store", version = "0.1.0", source = { git = "https://github.com/wispsy/backpack.git?rev=9a691aa551bf7fb42134168452bbdb2e1d454928#9a691aa551bf7fb42134168452bbdb2e1d454928" }, extra = ["enforce-type"], marker = "extra == 'extra-19-compose-application-tabular' or (extra == 'extra-19-compose-application-live' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-service' and extra == 'extra-19-compose-application-validation') or (extra == 'extra-19-compose-application-ui' and extra == 'extra-19-compose-application-validation') or (extra != 'extra-19-compose-application-live' and extra != 'extra-19-compose-application-service' and extra != 'extra-19-compose-application-ui' and extra != 'extra-19-compose-application-validation')" },
 ]
 
 [[package]]
@@ -183,8 +161,12 @@ wheels = [
 
 [[package]]
 name = "headless-spreadsheets"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/headless_spreadsheets.git?rev=6eaff1b3764910720956c66559dce3f34a430ee2#6eaff1b3764910720956c66559dce3f34a430ee2" }
+version = "0.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e0/ef/3d89e28424f9e41fa4cc6e6bb111955a47c40deafcb9cb282629b42d5841/headless_spreadsheets-0.1.1.tar.gz", hash = "sha256:225a180ac0b14f9d1296f5421c956bb91fb883870a6f8a3e27f8321253a37d9d", size = 22536, upload-time = "2026-11-24T22:03:04.636Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cd/0a/b74ee4cd1ce216553b0c942bcc1afefa9ce14480ad953fb3b6e34918414d/headless_spreadsheets-0.1.1-py3-none-any.whl", hash = "sha256:6784dff4594e94c043b1eda9ec7c85bd5f1d5a70408c08b2ad4fb82417545c18", size = 27223, upload-time = "2026-11-24T22:03:03.639Z" },
+]
 
 [[package]]
 name = "playwright"
@@ -219,13 +201,12 @@ wheels = [
 
 [[package]]
 name = "spatial-ui"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/spatial_ui.git?rev=1c782cf8c899d605caad840c2f0d15d997d9ecc8#1c782cf8c899d605caad840c2f0d15d997d9ecc8" }
-
-[[package]]
-name = "spatial-ui"
-version = "0.1.0"
-source = { git = "https://github.com/wispsy/spatial_ui.git?rev=9e473497febdc505e54ba25536b65b68722d264b#9e473497febdc505e54ba25536b65b68722d264b" }
+version = "0.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f0/f6/5a8a437ec94cd41ce1d359be4f628437b19fe21af1c9e4ed315536a98dc2/spatial_ui-0.1.1.tar.gz", hash = "sha256:5452ad7266867344a37906a599e0af2298381842cf65edafce34c5a7b9c1bd76", size = 57080, upload-time = "2026-11-24T22:03:03.467Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a8/88/2995becc1cdeb231c97a13e240fbe44d836e93c1e6f4956962fa3dd19415/spatial_ui-0.1.1-py3-none-any.whl", hash = "sha256:111ef338d8b44793fb63b083658cccdfa1216f96ea20e06735af7cf68e933070", size = 64804, upload-time = "2026-11-24T22:03:02.399Z" },
+]
 
 [[package]]
 name = "typing-extensions"

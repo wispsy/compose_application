@@ -1,5 +1,11 @@
 # compose_application
 
+Initial PyPI preview: **0.1.0a1**. Optional profiles use published independent
+packages; generated projects select exact package-index versions.
+[Wispsy Releases](https://github.com/orgs/wispsy/projects/31) distinguishes
+published artifacts from main development. Historical qualification manifests
+remain unchanged; index qualification uses docs/release-sources-v1.json.
+
 The optional [compiled validation reference](docs/validation-reference.md)
 selects the expose-api Enforce Type adapter explicitly and qualifies it through
 persistent checked HTTP and independent process restart.

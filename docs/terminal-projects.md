@@ -36,3 +36,8 @@ provider services and package publication/deployment retain their own decisions.
 The [Cohesion Block B plan](https://github.com/wispsy/wispsy/blob/main/docs/cohesion-block-b/IMPLEMENTATION_PLAN.md)
 tracks shared service/API composition, Carets design tokens and the later
 Warewolf hub. Existing web/table/browser contracts and their queue remain intact.
+
+The initial package preview generates exact index requirements
+`carets==0.2.0` and `expose-interface==0.1.0`. Terminal applications remain
+independent of the composition package at runtime. Existing source qualification
+records retain their original library revisions.
