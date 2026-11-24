@@ -8,7 +8,7 @@ import tomllib
 import unittest
 from unittest.mock import patch
 
-from compose_application.projects import PROFILES, ProjectSpec, REFERENCE_REVISION, create_project, render_project
+from compose_application.projects import PROFILES, ProjectSpec, REFERENCE_VERSION, create_project, render_project
 
 
 class SelectionTests(unittest.TestCase):
@@ -17,7 +17,7 @@ class SelectionTests(unittest.TestCase):
             spec = ProjectSpec("garden-board", profile)
             self.assertEqual(spec.module, "garden_board")
             self.assertIn(f"[{profile}]", spec.dependency)
-            self.assertTrue(spec.dependency.endswith("@" + REFERENCE_REVISION))
+            self.assertTrue(spec.dependency.endswith("==" + REFERENCE_VERSION))
             selection = spec.selection()
             selection["name"] = "changed"
             self.assertEqual(spec.selection()["name"], "garden-board")

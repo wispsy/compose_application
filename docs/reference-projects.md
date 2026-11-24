@@ -91,3 +91,13 @@ Receipts also verify import isolation and unchanged bytes/modification times
 after source edits, a data fixture and the same generation request. The normal
 cross-platform compatibility job retains these results alongside existing
 service/UI/live acceptance. The base package still installs independently.
+
+## Initial package preview
+
+Generated web projects now select `compose-application[PROFILE]==0.1.0a1`.
+Current index qualification uses `docs/release-sources-v1.json`; historical
+source/minimum manifests remain unchanged. Before first publication, the
+qualifier installs the exact candidate and then resolves the generated project
+normally. After PyPI publication, `--published-projects` verifies resolution
+without preinstalling the candidate. Generation installs nothing and retains
+application-owned files and data on repeat requests.

@@ -13,7 +13,8 @@ from tempfile import TemporaryDirectory
 from .terminal_templates import TerminalProjectSpec, render_terminal_project
 
 
-REFERENCE_REVISION = "8977963049023c7fe72bb8a2c9089633df049c3d"
+REFERENCE_VERSION = "0.1.0a1"
+REFERENCE_SOURCE = "pypi:compose-application==" + REFERENCE_VERSION
 PROFILES = ("service", "ui", "live")
 _RESERVED = set(sys.stdlib_module_names) | {
     "compose_application", "expose_api", "backpack_store", "enforce_type", "spatial_ui",
@@ -28,7 +29,7 @@ class ProjectSpec:
 
     name: str
     profile: str
-    source: str = REFERENCE_REVISION
+    source: str = REFERENCE_SOURCE
 
     def __post_init__(self):
         if type(self.name) is not str or not 1 <= len(self.name) <= 48 or not re.fullmatch(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*", self.name):
@@ -37,8 +38,8 @@ class ProjectSpec:
             raise ValueError("Choose a project name that does not shadow a platform or Python module.")
         if type(self.profile) is not str or self.profile not in PROFILES:
             raise ValueError("Select service, ui or live explicitly.")
-        if type(self.source) is not str or self.source != REFERENCE_REVISION:
-            raise ValueError("Select the qualified immutable reference source.")
+        if type(self.source) is not str or self.source != REFERENCE_SOURCE:
+            raise ValueError("Select the qualified released reference version.")
 
     @property
     def module(self):
@@ -46,7 +47,7 @@ class ProjectSpec:
 
     @property
     def dependency(self):
-        return f"compose-application[{self.profile}] @ git+https://github.com/wispsy/compose_application.git@{self.source}"
+        return f"compose-application[{self.profile}]=={REFERENCE_VERSION}"
 
     def selection(self):
         """Return detached, non-secret generation metadata, independent of data schema."""
@@ -97,7 +98,7 @@ checked REST revisions. Choose a private persistent local SQLite path explicitly
 Application assembly and checks live in `src/{spec.module}/`; these files and
 the database belong to you. The selected reference owns its fixed work-item
 schema. Domain/schema changes require their own implementation and migration.
-Dependencies use qualified development sources, not published release promises.
+Dependencies select the qualified package-index preview version.
 Generation installs nothing and repeating the same request never updates files.
 Publication and public hosting require separate setup.
 '''
@@ -140,7 +141,7 @@ or use your credentials/data. The accepted reference owns its separate fixed
 live table/journal. Every writer must use the same event-enabled profile;
 stop writers and verify backups before upgrades or restoring compatible data.
 Application source and data belong to you; repeated generation leaves them
-untouched. These are qualified development sources. Publication and public
+untouched. Dependencies select the qualified package-index preview. Publication and public
 hosting remain separate from project generation and native acceptance.
 '''
     checks = (CHECK_RUNNER + helpers + phase_source).replace("__PROJECT_MODULE__", spec.module).replace("__PROJECT_PROFILE__", spec.profile)

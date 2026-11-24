@@ -49,12 +49,12 @@ class ServiceConfig:
 def _dependencies(*, extra="service"):
     try:
         for name in ("expose-api", "backpack-store", "enforce-type"):
-            if metadata.version(name) != "0.1.0":
+            if metadata.version(name) != "0.2.0":
                 raise ProfileError("Installed package versions do not match the qualified service profile.")
         api = import_module("expose_api")
         adapter = import_module("expose_api.backpack").BackpackStore
     except (ImportError, metadata.PackageNotFoundError):
-        raise ProfileError(f"Install compose-application[{extra}] with the qualified development dependencies.") from None
+        raise ProfileError(f"Install compose-application[{extra}] with the qualified published dependencies.") from None
     if not all(callable(getattr(adapter, name, None)) for name in ("open", "get_row", "update_checked", "delete_checked", "aclose")):
         raise ProfileError("The installed storage adapter does not implement the selected profile.")
     return api, adapter

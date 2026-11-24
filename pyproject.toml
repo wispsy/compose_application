@@ -1,28 +1,30 @@
 [project]
 name = "compose-application"
-version = "0.1.0.dev0"
+version = "0.1.0a1"
 description = "Optional composition of typed storage, APIs and spatial interfaces."
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE.md"]
 requires-python = ">=3.14"
 authors = [{ name = "ellainng" }]
 dependencies = []
 
 [project.optional-dependencies]
-validation = ["expose-api[backpack,enforce-type] @ git+https://github.com/wispsy/expose_api.git@c20ce4aa3487d4913b56ff244a031f83de2df285"]
-service = ["expose-api[backpack] @ git+https://github.com/wispsy/expose_api.git@5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1"]
+validation = ["expose-api[backpack,enforce-type]==0.2.0"]
+service = ["expose-api[backpack]==0.2.0"]
 ui = [
-    "expose-api[backpack] @ git+https://github.com/wispsy/expose_api.git@5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1",
-    "spatial-ui @ git+https://github.com/wispsy/spatial_ui.git@9e473497febdc505e54ba25536b65b68722d264b",
+    "expose-api[backpack]==0.2.0",
+    "spatial-ui==0.1.1",
 ]
 live = [
-    "expose-api[backpack] @ git+https://github.com/wispsy/expose_api.git@5d284e18bce7ae9f07ba64ac9297dad55a3fc5b1",
-    "spatial-ui @ git+https://github.com/wispsy/spatial_ui.git@9e473497febdc505e54ba25536b65b68722d264b",
+    "expose-api[backpack]==0.2.0",
+    "spatial-ui==0.1.1",
 ]
 
 tabular = [
-    "expose-api[backpack] @ git+https://github.com/wispsy/expose_api.git@cdff4682db5decc3d6bdb55f7ba5a6a2105f154a",
-    "spatial-ui @ git+https://github.com/wispsy/spatial_ui.git@1c782cf8c899d605caad840c2f0d15d997d9ecc8",
-    "headless-spreadsheets @ git+https://github.com/wispsy/headless_spreadsheets.git@6eaff1b3764910720956c66559dce3f34a430ee2",
+    "expose-api[backpack]==0.2.0",
+    "spatial-ui==0.1.1",
+    "headless-spreadsheets==0.1.1",
 ]
 
 [project.urls]

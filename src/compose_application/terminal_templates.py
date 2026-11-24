@@ -2,8 +2,8 @@
 from dataclasses import dataclass
 import json
 
-CARET_SOURCE = '991c3bfc67c4c6aaa49fecb62c819618605f1d03'
-INTERFACE_SOURCE = '8c71caefe67217bb6df87e280261746a3055fc86'
+CARET_SOURCE = 'pypi:carets==0.2.0'
+INTERFACE_SOURCE = 'pypi:expose-interface==0.1.0'
 
 
 @dataclass(frozen=True)
@@ -27,8 +27,8 @@ class TerminalProjectSpec:
 
     @property
     def dependencies(self):
-        return (f'carets @ git+https://github.com/wispsy/carets.git@{CARET_SOURCE}',
-                f'expose-interface @ git+https://github.com/wispsy/expose_interface.git@{INTERFACE_SOURCE}')
+        return ('carets==0.2.0',
+                'expose-interface==0.1.0')
 
     def selection(self):
         return {'format': 'terminal-project/1', 'name': self.name, 'profile': self.profile,
@@ -162,7 +162,7 @@ build-backend = "uv_build"
     readme = f'''# {spec.name}
 
 An application-owned terminal project using Expose Interface plus Carets.
-Python 3.14+ and uv are required. Library sources are selected immutably in
+Python 3.14+ and uv are required. Library versions are selected explicitly in
 `reference-project.json`; no umbrella composition runtime is required.
 
 ```sh

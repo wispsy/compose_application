@@ -32,7 +32,7 @@ dd { margin-bottom: .5rem; }
 
 def _ui_dependencies():
     try:
-        if metadata.version("spatial-ui") != "0.1.0":
+        if metadata.version("spatial-ui") != "0.1.1":
             raise ProfileError("The UI package version does not match the qualified profile.")
         from spatial_ui import App, Component, Field, FormSchema, Session, html
         from spatial_ui.resource_form import ResourceForm

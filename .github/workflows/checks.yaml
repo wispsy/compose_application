@@ -42,7 +42,7 @@ jobs:
       - run: uv run --locked python -m scripts.check_tabular
       - run: uv run --locked python -m unittest discover -s tests
       - run: uv run --locked python scripts/probe_track_b.py
-      - run: uv run --locked python scripts/check_distribution.py --matrix --ui --live --projects --validation --tabular --report compatibility.json
+      - run: uv run --locked python scripts/check_distribution.py --release-profile --matrix --ui --live --projects --validation --tabular --report compatibility.json
       - name: Retain exact compatibility receipt
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -151,7 +151,7 @@ jobs:
           python-version: '3.14'
       - run: uv sync --locked --extra tabular --group browser-tests
       - run: uv run --frozen python -m playwright install --with-deps chromium
-      - run: uv run --frozen python -W error::ResourceWarning scripts/check_distribution.py --tabular --tabular-browser --report tabular-installed-browser.json
+      - run: uv run --frozen python -W error::ResourceWarning scripts/check_distribution.py --release-profile --tabular --tabular-browser --report tabular-installed-browser.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: tabular-browser

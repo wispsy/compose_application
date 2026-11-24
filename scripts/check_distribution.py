@@ -14,6 +14,8 @@ import tomllib
 import venv
 
 ROOT = Path(__file__).resolve().parents[1]
+PROFILE_FILE = ROOT / "docs/compatibility-v1.json"
+TABULAR_PROFILE_FILE = ROOT / "docs/tabular-sources-v1.json"
 
 
 def run(*arguments, cwd, capture=False):
@@ -125,7 +127,7 @@ print(json.dumps({"spatial-ui": {"version": distribution.version, "revision": di
 def qualify_live(python, work):
     path = work / "live-receipt.json"
     run(python, "-I", "-W", "error::ResourceWarning", ROOT / "scripts/check_live_profile.py",
-        "--tests", work / "tests", "--expected", ROOT / "docs/compatibility-v1.json",
+        "--tests", work / "tests", "--expected", PROFILE_FILE,
         "--isolated", "--receipt", path, cwd=work)
     receipt = json.loads(path.read_text(encoding="utf-8"))
     if not receipt["passed"] or receipt["skipped"] or receipt["tests"] < 9:
@@ -201,7 +203,7 @@ def qualify_tabular_upgrade(minimum_python, python, work, kind, minimum):
 
 
 def qualify_tabular(python, work, *, browser=False):
-    expected = json.loads((ROOT / "docs/tabular-sources-v1.json").read_text())["packages"]
+    expected = json.loads(TABULAR_PROFILE_FILE.read_text())["packages"]
     receipt = tabular_provenance(python, work, expected)
     checks = '''
 import json,sys,unittest
@@ -275,7 +277,7 @@ print(json.dumps({"tests": result.testsRun, "skipped": len(result.skipped), "pas
     return receipt
 
 
-def qualify_projects(generator, work, kind, manifest, stage):
+def qualify_projects(generator, work, kind, manifest, stage, candidate=None):
     """Install the emitted projects normally, including their immutable dependencies."""
     receipts = []
     for profile, count in (("service", 9), ("ui", 15), ("live", 15)):
@@ -290,11 +292,16 @@ def qualify_projects(generator, work, kind, manifest, stage):
             raise RuntimeError("Installed generator did not create the selected project.")
         selection = creation["selection"]
         project = tomllib.loads((destination / "pyproject.toml").read_text(encoding="utf-8"))["project"]
-        expected_dependency = f"compose-application[{profile}] @ git+https://github.com/wispsy/compose_application.git@{selection['source']}"
+        expected_dependency = f"compose-application[{profile}]=={manifest['composition']['version']}"
         if project["dependencies"] != [expected_dependency]:
             raise RuntimeError("Generated project selected unexpected dependencies.")
         digest = package_digest(destination / "src" / module)
         python = environment(work / (kind + "-" + profile + "-environment"))
+        # Qualify the exact candidate before its first publication. Installed
+        # metadata must satisfy the generated version; other dependencies
+        # resolve from the index normally. Post-publication uses PyPI alone.
+        if candidate is not None:
+            run("uv", "pip", "install", "--python", python, str(candidate) + f"[{profile}]", cwd=work)
         # Resolve the generated dependency declaration without overrides/no-deps.
         run("uv", "pip", "install", "--python", python, destination, cwd=work)
         run("uv", "pip", "check", "--python", python, cwd=work)
@@ -321,7 +328,7 @@ print(json.dumps({{"packages": packages, "source_sha256": digest.hexdigest(), "i
 '''
         installed = json.loads(run(python, "-I", "-c", probe, cwd=work, capture=True))
         expected = {**manifest["current"]["packages"], "compose-application": {
-            "version": "0.1.0.dev0", "revision": selection["source"]}}
+            **manifest["composition"]}}
         if profile != "service":
             expected.update(manifest["ui"]["packages"])
         if installed["packages"] != expected or installed["source_sha256"] != digest:
@@ -352,6 +359,7 @@ print(json.dumps({{"packages": packages, "source_sha256": digest.hexdigest(), "i
 
 
 def main():
+    global PROFILE_FILE, TABULAR_PROFILE_FILE
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--service", action="store_true", help="qualify the optional service profile in both installed artifacts")
     parser.add_argument("--matrix", action="store_true", help="qualify the finite minimum/current matrix and code upgrades")
@@ -362,7 +370,13 @@ def main():
     parser.add_argument("--tabular", action="store_true", help="qualify read-only/editable/headless table profiles and retained-data upgrades")
     parser.add_argument("--tabular-browser", action="store_true", help="run actual Chromium from each isolated tabular artifact installation")
     parser.add_argument("--report", type=Path, help="write a machine-readable receipt, including failure phase")
+    parser.add_argument("--release-profile", action="store_true", help="Qualify index versions while retaining historical minimum fixtures")
+    parser.add_argument("--artifacts", type=Path, help="Qualify a prebuilt release pair")
+    parser.add_argument("--published-projects", action="store_true", help="Resolve generated projects from PyPI after publication")
     args = parser.parse_args()
+    if args.release_profile:
+        PROFILE_FILE = ROOT / "docs/release-sources-v1.json"
+        TABULAR_PROFILE_FILE = ROOT / "docs/release-tabular-v1.json"
     if args.tabular_browser and not args.tabular:
         parser.error("--tabular-browser requires --tabular")
     if args.tabular and (sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 14)
@@ -371,7 +385,7 @@ def main():
     project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
     if project["dependencies"]:
         raise RuntimeError("The initial package foundation declares no runtime dependencies.")
-    manifest = json.loads((ROOT / "docs/compatibility-v1.json").read_text()) if args.matrix or args.ui or args.live or args.projects or args.validation else None
+    manifest = json.loads(PROFILE_FILE.read_text()) if args.matrix or args.ui or args.live or args.projects or args.validation else None
     if args.matrix and (sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 14)
                         or platform.system() not in manifest["operating_systems"]):
         parser.error("This finite matrix qualifies CPython 3.14 on Linux, macOS and Windows.")
@@ -386,8 +400,9 @@ def main():
         with tempfile.TemporaryDirectory(prefix="compose-application-distributions-") as directory:
             work, minimum_python = Path(directory), None
             stage("build")
-            artifacts = work / "artifacts"
-            run("uv", "build", "--no-sources", "--out-dir", artifacts, cwd=ROOT)
+            artifacts = args.artifacts.resolve() if args.artifacts else work / "artifacts"
+            if not args.artifacts:
+                run("uv", "build", "--no-sources", "--out-dir", artifacts, cwd=ROOT)
             wheels, sources = list(artifacts.glob("*.whl")), list(artifacts.glob("*.tar.gz"))
             if len(wheels) != 1 or len(sources) != 1:
                 raise RuntimeError("Expected one wheel and one source distribution.")
@@ -449,7 +464,7 @@ def main():
                     receipt["upgrade"] = [upgrade_phase(minimum_python, work, database, "write"),
                                            upgrade_phase(python, work, database, "reload")]
                 if args.projects:
-                    receipt["projects"] = qualify_projects(python, work, kind, manifest, stage)
+                    receipt["projects"] = qualify_projects(python, work, kind, manifest, stage, None if args.published_projects else artifact)
                 if args.validation:
                     stage(kind + "/validation-install")
                     validation_python = environment(work / (kind + "-validation"))
