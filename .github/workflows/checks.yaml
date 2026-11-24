@@ -64,7 +64,7 @@ jobs:
           version: '0.13.6'
           python-version: '3.14'
       - run: uv sync --locked --extra live
-      - run: uv run --frozen python -W error::ResourceWarning scripts/check_live_profile.py --receipt live-profile.json
+      - run: uv run --frozen python -W error::ResourceWarning scripts/check_live_profile.py --expected docs/release-sources-v1.json --receipt live-profile.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: live-profile
